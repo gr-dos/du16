@@ -1,0 +1,45 @@
+Topic: DU
+Summary: Shows the disk space used by files and directories
+Origin: du16
+Group: command
+Files: DU.EXE
+
+Syntax
+  DU [options] [drive:][path]...
+
+  path         A file or directory to report; the current directory if
+               left out. Several may be given. No wildcards.
+  -a           Shows a line for each file too, not only directories.
+  -s           Shows only one line, the total, for each path.
+  -c           Adds a line with the grand total.
+  -k           Sizes in KB (1,024 bytes), rounded up. The default.
+  -h           Sizes in B, KiB, MiB or GiB, rounded up.
+  -b           Shows the files' lengths in bytes, as DIR does, instead
+               of the space they take.
+  --help       Shows the usage. --version shows the version.
+
+Examples
+  DU
+    Shows the space used by each directory below the current one.
+  DU -S C:\ A:\
+    Shows the total for drive C: and for the floppy in A:.
+  DU -A C:\GAMES | SORT
+    Lists every file and directory in C:\GAMES, smallest first.
+  DU -SC C:\DOS C:\UTILS
+    Shows the two directories and the total of both.
+
+Exit status
+  0 when everything was read; 1 if a path was not found, a drive was
+  not ready, or part of a tree could not be read; 2 for a bad option.
+
+Notes
+  A file takes whole clusters, so DU counts its length rounded up to
+  the drive's cluster size: a 1-byte file takes 1 KB on a 360 KB
+  floppy and 2 KB to 32 KB on a hard disk. Hidden and system files are
+  counted; the space of the directories themselves is not, so the
+  total for a drive is what CHKDSK calls bytes in user and hidden files.
+
+  Each directory is shown after the directories in it. A path that
+  cannot be read is reported, and DU goes on with the rest. DU only
+  reads the disk, and an empty floppy drive gives an error rather than
+  "Abort, Retry, Fail?".
